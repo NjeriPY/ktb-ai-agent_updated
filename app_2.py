@@ -12,8 +12,8 @@ from groq import Groq
 
 load_dotenv()
 
-TAVILY_API_KEY = os.getenv('TAVILY_API_KEY')
-GROQ_API_KEY = os.getenv('GROQ_API_KEY')
+TAVILY_API_KEY = st.secrets.get('TAVILY_API_KEY') or os.getenv('TAVILY_API_KEY')
+GROQ_API_KEY = st.secrets.get('GROQ_API_KEY') or os.getenv('GROQ_API_KEY')
 
 
 #initializing groq client
@@ -28,7 +28,7 @@ st.set_page_config(page_title='Klugekopf TechBridge AI Agent', page_icon='🤖',
 #st.title('🤖 Klugekopf TechBridge AI Agent')
 #st.subheader('Researcher | Content Creator | SEO Optimizer')
 
-#using html and cass to stylr page title and subhead
+#using html and css to stylr page title and subhead
 st.markdown("""
     <style>
     /* Main Background - Clean White to match the site */
@@ -140,7 +140,7 @@ if st.button('Generate Content'):
              #st.markdown('### Generated Content')
              #st.write(response.choices[0].message.content)
 
-             #variavle for storing the results for use in the  card html
+             #variavle for storing the results for use in the card html
 
              final_content = response.choices[0].message.content
 
