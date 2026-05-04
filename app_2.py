@@ -28,7 +28,7 @@ GROQ_API_KEY = get_api_key('GROQ_API_KEY')
 
 # Error Handling for missing keys
 if not TAVILY_API_KEY or not GROQ_API_KEY:
-    st.error("🔑 API Keys not found. Please check your .env file locally or Secrets on the cloud.")
+    st.error("API Keys not found. Please check your .env file locally or Secrets on the cloud.")
     st.stop()
 
 
