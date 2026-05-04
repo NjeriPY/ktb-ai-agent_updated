@@ -8,12 +8,28 @@ from tavily import TavilyClient
 from groq import Groq
 
 
-#loading API Keys
+#loading API Keys and error handling for missing files and keys
 
 load_dotenv()
 
-TAVILY_API_KEY = st.secrets.get('TAVILY_API_KEY') or os.getenv('TAVILY_API_KEY')
-GROQ_API_KEY = st.secrets.get('GROQ_API_KEY') or os.getenv('GROQ_API_KEY')
+#TAVILY_API_KEY = st.secrets.get('TAVILY_API_KEY') or os.getenv('TAVILY_API_KEY')
+#GROQ_API_KEY = st.secrets.get('GROQ_API_KEY') or os.getenv('GROQ_API_KEY')
+def get_api_key(key_name):
+    """Checks Streamlit Secrets first, then local .env"""
+    try:
+        if key_name in st.secrets:
+            return st.secrets[key_name]
+    except Exception:
+        pass
+    return os.getenv(key_name)
+
+TAVILY_API_KEY = get_api_key('TAVILY_API_KEY')
+GROQ_API_KEY = get_api_key('GROQ_API_KEY')
+
+# Error Handling for missing keys
+if not TAVILY_API_KEY or not GROQ_API_KEY:
+    st.error("🔑 API Keys not found. Please check your .env file locally or Secrets on the cloud.")
+    st.stop()
 
 
 #initializing groq client
